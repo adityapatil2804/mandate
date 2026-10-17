@@ -1,5 +1,9 @@
 # Mandate
 
+![CI](https://github.com/adityapatil2804/mandate/actions/workflows/ci.yml/badge.svg)
+
+**A delegated-authority gateway for AI agents.** ...
+
 **A delegated-authority gateway for AI agents.** Every tool call an agent makes is tied to the human who authorized it, limited to one task's scope, checked by a policy engine, and written to a signed, hash-chained log.
 
 Mandate assumes the model *will* be fooled by prompt injection, and limits what a fooled agent can do.
