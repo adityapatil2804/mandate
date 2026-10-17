@@ -1,11 +1,6 @@
 # Mandate
 
-https://github.com/user-attachments/assets/dff81e18-37e2-4de2-b912-a969de01c7ad
-
-
-
 ![CI](https://github.com/adityapatil2804/mandate/actions/workflows/ci.yml/badge.svg)
-
 
 **A delegated-authority gateway for AI agents.** Every tool call an agent makes is tied to the human who authorized it, limited to one task's scope, checked by a policy engine, and written to a signed, hash-chained log.
 
@@ -15,9 +10,15 @@ Mandate assumes the model *will* be fooled by prompt injection, and limits what 
 attacks blocked     37/37  (100.0%)
 false blocks        0/12   (0.0%)
 known limitations   3/3 not stopped (by design, see below)
-decision latency    p50 1.04 ms   p95 1.57 ms   p99 2.34 ms   (n=1000)
+decision latency    p50 0.8 ms   p95 1.2 ms   p99 2.2 ms   (n=1000)
 ```
-<sub>`python -m attacks.run` on a laptop-class Linux box. Latency is gateway decision overhead (token verify + parse + OPA + ledger), excluding the tool itself.</sub>
+<sub>`python -m attacks.run` on Linux. Latency is gateway decision overhead (token verify + parse + OPA + ledger), excluding the tool itself.</sub>
+
+## Demo
+
+Claude Desktop connected to Mandate over MCP. The workspace file contains a hidden prompt injection. The model spots it, and when the agent is told to send the report to the attacker anyway (simulating a hijacked agent), the gateway denies the call regardless of what the model decides.
+
+https://github.com/user-attachments/assets/dff81e18-37e2-4de2-b912-a969de01c7ad
 
 ## The problem
 
