@@ -1,0 +1,24 @@
+services:
+  opa:
+    image: openpolicyagent/opa:1.4.2
+    command: ["run", "--server", "--addr", "0.0.0.0:8181", "--log-level", "error", "/policies/mandate.rego"]
+    volumes: ["./policies:/policies:ro"]
+
+  gateway:
+    build: .
+    ports: ["8080:8080"]
+    depends_on: [opa]
+    environment:
+      OPA_URL: http://opa:8181
+      MANDATE_ADMIN_KEY: ${MANDATE_ADMIN_KEY:-change-me}
+      # Real credentials live ONLY here, never in the agent's environment.
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      SMTP_HOST: ${SMTP_HOST:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      SMTP_FROM: ${SMTP_FROM:-}
+    volumes: ["mandate-data:/data"]
+
+volumes:
+  mandate-data:
